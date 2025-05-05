@@ -1,11 +1,21 @@
 package com.example.demo.dto.request;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class UserCreationRequest {
+    @Size(min = 3, max = 50, message = "USER_NOT_VALID")
     private String name;
+
+    @Size(min = 8, message = "PASSWORD_NOT_VALID")
     private String password;
+
+    @Email(message = "EMAIL_NOT_VALID")
     private String email;
+    @NotNull(message = "DOB_NOT_NULL")
     private LocalDate dob;
 
     public String getName() {
