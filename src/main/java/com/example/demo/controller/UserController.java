@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.request.ApiResponse;
 import com.example.demo.dto.request.UserCreationRequest;
+import com.example.demo.dto.response.UserResponse;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -21,28 +22,50 @@ public class UserController {
         ApiResponse<User> response = new ApiResponse<>();
         User user = userService.createUser(request);
         response.setCode(200);
-        response.setMessage("Tạo người dùng thành công");
+        response.setMessage("Success");
         response.setResult(user);
         return response;
     }
 
     @GetMapping
-    List<User> getAllUsers() {
-        return userService.getAllUsers();
+    ApiResponse<List<User>> getAllUsers() {
+        ApiResponse<List<User>> response = new ApiResponse<>();
+        response.setCode(200);
+        response.setMessage("Success");
+        response.setResult(userService.getAllUsers());
+        response.setTotalRecords(
+                userService.getAllUsers().size()
+        );
+        return response;
     }
 
     @GetMapping("/{id}")
-    User getUserById(@PathVariable String id) {
-        return userService.getUserById(id);
+    ApiResponse<UserResponse> getUserById(@PathVariable String id) {
+        ApiResponse<UserResponse> response = new ApiResponse<>();
+        response.setCode(200);
+        response.setMessage("Success");
+        response.setResult(userService.getUserById(id));
+        response.setTotalRecords(
+                userService.getUserById(id) != null ? 1 : 0
+        );
+        return response;
     }
 
     @DeleteMapping("/{id}")
-    void deleteUserById(@PathVariable String id) {
+    ApiResponse<Void> deleteUserById(@PathVariable String id) {
+        ApiResponse<Void> response = new ApiResponse<>();
         userService.deleteUserById(id);
+        response.setCode(200);
+        response.setMessage("Success");
+        return response;
     }
 
     @PutMapping("/{id}")
-    User updateUser(@PathVariable String id, @RequestBody UserCreationRequest request) {
-        return userService.updateUser(id, request);
+    ApiResponse<User> updateUser(@PathVariable String id, @RequestBody UserCreationRequest request) {
+        ApiResponse<User> response = new ApiResponse<>();
+        response.setCode(200);
+        response.setMessage("Success");
+        response.setResult(userService.updateUser(id, request));
+        return response;
     }
 }

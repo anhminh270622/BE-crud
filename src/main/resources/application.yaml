@@ -12,3 +12,5 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+jwt:
+  apiKeyToken: "D9LGeo6XIxglpGGsXZddTd8hW5W9Y80hMxbDnPhlFJToI113fVE08WC0I0lM4Btf"

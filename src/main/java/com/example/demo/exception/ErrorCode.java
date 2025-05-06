@@ -9,6 +9,7 @@ public enum ErrorCode {
     PASSWORD_NOT_VALID(1004, "Mật khẩu phải ít nhất 8 ký tự"),
     EMAIL_NOT_VALID(1005, "Email không hợp lệ"),
     DOB_NOT_NULL(1006, "Ngày sinh không được để trống"),
+    USER_NOT_AUTH(1007, "Tên đăng nhập hoặc mật khẩu không đúng"),
     ;
 
     private int code;
