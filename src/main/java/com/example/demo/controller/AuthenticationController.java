@@ -47,4 +47,13 @@ public class AuthenticationController {
                 .build();
     }
 
+    @PostMapping("/logout")
+    ApiResponse<VerifyResponse> logout(@RequestBody VerifyRequest request) throws JOSEException, ParseException {
+        var result = authenticationService.logout(request);
+        return ApiResponse.<VerifyResponse>builder()
+                .code(200)
+                .message("Success")
+                .result(result)
+                .build();
+    }
 }

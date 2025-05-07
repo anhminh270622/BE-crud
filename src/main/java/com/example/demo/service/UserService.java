@@ -3,26 +3,32 @@ package com.example.demo.service;
 import com.example.demo.dto.request.UserCreationRequest;
 import com.example.demo.dto.response.UserResponse;
 import com.example.demo.entity.User;
+import com.example.demo.enums.Role;
 import com.example.demo.exception.AppException;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
-    @Autowired
-    private UserMapper userMapper;
+    UserMapper userMapper;
 
-    public User createUser(UserCreationRequest request) {
+    PasswordEncoder passwordEncoder;
+
+    public UserResponse createUser(UserCreationRequest request) {
 
         if (userRepository.existsByName(request.getName())) {
             throw new AppException(ErrorCode.USER_EXITED);
@@ -31,13 +37,20 @@ public class UserService {
             throw new AppException(ErrorCode.EMAIL_EXITED);
         }
         User user = userMapper.toUser(request);
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        return userRepository.save(user);
+
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            HashSet<String> roles = new HashSet<>();
+            roles.add(Role.USER.name());
+            user.setRoles(roles);
+        }
+
+        return userMapper.toUserResponse(userRepository.save(user));
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    @PreAuthorize("hasRole('USER')")
+    public List<UserResponse> getAllUsers() {
+        return userMapper.toUserResponseList(userRepository.findAll());
     }
 
     public UserResponse getUserById(String id) {

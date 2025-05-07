@@ -6,11 +6,14 @@ import com.example.demo.dto.response.UserResponse;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -18,9 +21,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping()
-    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request) {
-        ApiResponse<User> response = new ApiResponse<>();
-        User user = userService.createUser(request);
+    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
+        ApiResponse<UserResponse> response = new ApiResponse<>();
+        UserResponse user = userService.createUser(request);
         response.setCode(200);
         response.setMessage("Success");
         response.setResult(user);
@@ -28,8 +31,8 @@ public class UserController {
     }
 
     @GetMapping
-    ApiResponse<List<User>> getAllUsers() {
-        ApiResponse<List<User>> response = new ApiResponse<>();
+    ApiResponse<List<UserResponse>> getAllUsers() {
+        ApiResponse<List<UserResponse>> response = new ApiResponse<>();
         response.setCode(200);
         response.setMessage("Success");
         response.setResult(userService.getAllUsers());
