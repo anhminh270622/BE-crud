@@ -20,6 +20,7 @@ public enum ErrorCode {
     DOB_NOT_NULL(1006, "Ngày sinh không được để trống", HttpStatus.BAD_REQUEST),
     USER_NOT_AUTH(1007, "Tên đăng nhập hoặc mật khẩu không đúng", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1008, "Bạn không có quyền truy cập ", HttpStatus.FORBIDDEN),
+    PHONE_NOT_VALID(1009, "Số điện thoại không hợp lệ", HttpStatus.BAD_REQUEST),
     ;
 
     int code;

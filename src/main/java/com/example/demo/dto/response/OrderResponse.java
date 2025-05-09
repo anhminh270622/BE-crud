@@ -4,21 +4,22 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
-import java.util.Set;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserResponse {
-    String id;
-    String name;
-    String email;
-    LocalDate dob;
+public class OrderResponse {
+    String userId;
+    String productId;
+    String productName;
+    String nameOrder;
     String imageUrl;
+    int statusId;
+    String statusName;
+    String address;
+    String note;
     String phone;
-    Set<String> roles;
+    int totalPrice;
 }

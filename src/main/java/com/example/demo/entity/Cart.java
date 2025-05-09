@@ -1,11 +1,11 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -13,15 +13,15 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 @Entity
-public class User {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
+    String userId;
     String name;
-    String password;
-    String email;
-    LocalDate dob;
+    int price;
     String imageUrl;
-    String phone;
-    Set<String> roles;
+    String size;
+    String color;
+    int quantity;
 }

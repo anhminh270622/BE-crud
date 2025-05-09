@@ -71,6 +71,8 @@ public class UserService {
             user.setPassword(request.getPassword());
             user.setEmail(request.getEmail());
             user.setDob(request.getDob());
+            user.setImageUrl(request.getImageUrl());
+            user.setPhone(request.getPhone());
             return userRepository.save(user);
         }
         return null;

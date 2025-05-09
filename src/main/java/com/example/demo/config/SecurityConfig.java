@@ -31,6 +31,12 @@ public class SecurityConfig {
     private final String[] WHITELISTED_URLS = {
             "/api/users",
             "/api/auth/**",
+            "/api/contact",
+    };
+    private  final String[] IGNORE_URLS = {
+            "/api/products/**",
+            "/api/order/**",
+            "/api/advertisement/**",
     };
 
     @Value("${jwt.apiKeyToken}")
@@ -41,6 +47,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(HttpMethod.POST, WHITELISTED_URLS).permitAll()
+                                .requestMatchers(IGNORE_URLS).permitAll()
 //                        .requestMatchers(HttpMethod.GET, "/api/users")
 //                        .hasRole(Role.ADMIN.name())
                                 .anyRequest().authenticated()
