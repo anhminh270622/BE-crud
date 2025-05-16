@@ -2,7 +2,7 @@ services:
   - type: web
     name: apt-shop
     env: java
-    runtime: java-17  # Hoặc 'java' để dùng phiên bản mặc định
+    runtime: java17
     plan: free
     buildCommand: ./gradlew build
     startCommand: java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
