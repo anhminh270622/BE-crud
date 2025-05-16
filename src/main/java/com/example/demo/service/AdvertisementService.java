@@ -27,4 +27,12 @@ public class AdvertisementService {
     public List<AdvertisementResponse> getAllAdvertisements() {
         return advertisementMapper.toAdvertisementResponseList(advertisementRepository.findAll());
     }
+
+    public void deleteAdvertisement(String id) {
+        if (advertisementRepository.existsById(id)) {
+            advertisementRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Không tìm thấy sản phẩm với id: " + id);
+        }
+    }
 }

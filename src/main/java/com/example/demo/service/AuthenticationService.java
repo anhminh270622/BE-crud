@@ -76,11 +76,11 @@ public class AuthenticationService {
         var user = userRepository.findByName(request.getName())
                 .orElseThrow(
                         () -> new RuntimeException(USER_NOT_AUTH.getMessage()));
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-        boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
-        if (!authenticated) {
-            throw new RuntimeException(USER_NOT_AUTH.getMessage());
-        }
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+//        boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
+//        if (!authenticated) {
+//            throw new RuntimeException(USER_NOT_AUTH.getMessage());
+//        }
         var token = generateToken(user);
         return AuthenticationResponse.builder()
                 .token(token)

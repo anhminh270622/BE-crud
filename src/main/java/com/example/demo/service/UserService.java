@@ -37,7 +37,7 @@ public class UserService {
             throw new AppException(ErrorCode.EMAIL_EXITED);
         }
         User user = userMapper.toUser(request);
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+//        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         if (user.getRoles() == null || user.getRoles().isEmpty()) {
             HashSet<String> roles = new HashSet<>();
@@ -48,7 +48,7 @@ public class UserService {
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
-    @PreAuthorize("hasRole('USER')")
+//    @PreAuthorize("hasRole('USER')")
     public List<UserResponse> getAllUsers() {
         return userMapper.toUserResponseList(userRepository.findAll());
     }

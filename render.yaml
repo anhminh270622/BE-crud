@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: api-shop
+    env: java
+    runtime: openjdk17
+    plan: free
+    buildCommand: ./gradlew build
+    startCommand: java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: PORT
+        value: $PORT

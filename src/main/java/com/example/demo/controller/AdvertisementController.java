@@ -36,4 +36,13 @@ public class AdvertisementController {
         );
         return response;
     }
+
+    @DeleteMapping("/{id}")
+    ApiResponse<Void> deleteAdvertisement(@PathVariable String id) {
+        ApiResponse<Void> response = new ApiResponse<>();
+        advertisementService.deleteAdvertisement(id);
+        response.setCode(200);
+        response.setMessage("Success");
+        return response;
+    }
 }

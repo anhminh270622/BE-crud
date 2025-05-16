@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.request.ApiResponse;
 import com.example.demo.dto.request.ProductCreationRequest;
 import com.example.demo.dto.response.ProductResponse;
-import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +37,7 @@ public class ProductController {
         );
         return response;
     }
+
     @GetMapping("/{id}")
     ApiResponse<ProductResponse> getProductById(@PathVariable String id) {
         ApiResponse<ProductResponse> response = new ApiResponse<>();
@@ -59,6 +59,7 @@ public class ProductController {
         response.setResult(product);
         return response;
     }
+
     @DeleteMapping("/{id}")
     ApiResponse<Void> deleteProductById(@PathVariable String id) {
         ApiResponse<Void> response = new ApiResponse<>();
