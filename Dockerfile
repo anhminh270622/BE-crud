@@ -1,11 +1,12 @@
-FROM openjdk:17-jdk-alpine
+# Stage 1: Build
+FROM gradle:8.7-jdk17-alpine as builder
 WORKDIR /app
-COPY . /app
-RUN mvn clean package
+COPY . .
+RUN gradle clean build -x test
 
-
-FROM openjdk:17-jre-alpine
+# Stage 2: Run
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=0 /app/target/*.jar app.jar
+COPY --from=builder /app/build/libs/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]s
+ENTRYPOINT ["java", "-jar", "app.jar"]
