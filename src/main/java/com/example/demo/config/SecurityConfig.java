@@ -44,21 +44,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())  // <-- Bật cors ở đây
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers(HttpMethod.POST, WHITELISTED_URLS).permitAll()
-                                .requestMatchers(IGNORE_URLS).permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/api/users")
-//                        .hasRole(Role.ADMIN.name())
-                                .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.POST, WHITELISTED_URLS).permitAll()
+                        .requestMatchers(IGNORE_URLS).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
-        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(
-                jwt -> jwt.decoder(jwtDecoder())
-                        .jwtAuthenticationConverter(jwtAuthenticationConverter())
+
+        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt
+                .decoder(jwtDecoder())
+                .jwtAuthenticationConverter(jwtAuthenticationConverter())
         ));
         return http.build();
     }
+
 
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter() {
@@ -88,13 +90,15 @@ public class SecurityConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedOriginPattern("*");  // dùng addAllowedOriginPattern để cho phép mọi domain khi allowCredentials=true
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
-        return new CorsFilter(urlBasedCorsConfigurationSource);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return new CorsFilter(source);
     }
+
 
 }
