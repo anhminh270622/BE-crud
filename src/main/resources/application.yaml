@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /demo
+    context-path: /shop
 spring:
   data:
     mongodb:
