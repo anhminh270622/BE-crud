@@ -19,9 +19,12 @@ public class ProductService {
     ProductRepository productRepository;
     ProductMapper productMapper;
 
-    public ProductResponse createProduct(ProductCreationRequest request) {
-        Product product = productMapper.toProduct(request);
-        return productMapper.toProductResponse(productRepository.save(product));
+    public List<ProductResponse> createProducts(List<ProductCreationRequest> requests) {
+        List<Product> products = requests.stream()
+                .map(productMapper::toProduct)
+                .toList();
+        List<Product> savedProducts = productRepository.saveAll(products);
+        return productMapper.toProductResponseList(savedProducts);
     }
 
     public List<ProductResponse> getAllProducts() {

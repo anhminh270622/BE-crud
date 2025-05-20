@@ -6,6 +6,7 @@ import com.example.demo.dto.response.ProductResponse;
 import com.example.demo.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +18,13 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping()
-    ApiResponse<ProductResponse> addProduct(@RequestBody @Valid ProductCreationRequest request) {
-        ApiResponse<ProductResponse> response = new ApiResponse<>();
-        ProductResponse product = productService.createProduct(request);
+    ApiResponse<List<ProductResponse>> addProduct(@RequestBody List<@Valid ProductCreationRequest> request) {
+        ApiResponse<List<ProductResponse>> response = new ApiResponse<>();
+        List<ProductResponse> products = productService.createProducts(request);
         response.setCode(200);
         response.setMessage("Success");
-        response.setResult(product);
+        response.setResult(products);
+        response.setTotalRecords(products.size());
         return response;
     }
 
