@@ -1,8 +1,12 @@
 package com.example.demo.dto.response;
 
+import com.example.demo.dto.request.ImageRequest;
+import com.example.demo.dto.request.SizeRequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -13,11 +17,13 @@ import lombok.experimental.FieldDefaults;
 public class ProductResponse {
     String id;
     String name;
-    String description;
-    String imageUrl;
-    double price;
-    String category;
-    String brand;
-    int salePrice;
+    List<String> description;
+    List<String> parameter;
+    int price;
+    int price_sale;
+    String trademark;
+    List<ImageRequest> images;
+    String type;
+    List<SizeRequest> sizes;
     int quantity;
 }

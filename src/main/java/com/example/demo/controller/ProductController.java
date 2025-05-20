@@ -70,4 +70,12 @@ public class ProductController {
         response.setMessage("Success");
         return response;
     }
+    @DeleteMapping("/all")
+    ApiResponse<Void> deleteAllProducts() {
+        ApiResponse<Void> response = new ApiResponse<>();
+        productService.deleteAllProducts();
+        response.setCode(200);
+        response.setMessage("Success");
+        return response;
+    }
 }
